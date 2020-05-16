@@ -1,6 +1,6 @@
 import * as $ from 'jquery';
 
-const SECTION_SELECTORS = '.section, section, article, .article, .id-Teaser-el, .teaser, figure, .hs-widget, .sz-teaserlist-element, .szFussballTickerTeasermodul, .teaser-media, .thema_clip_large [role="region"], .park-opener, .pdb-teaser, .pdb-teaser3-row-item';
+const SECTION_SELECTORS = '.section, section, article, .article, .id-Teaser-el, .teaser, figure, .hs-widget, .sz-teaserlist-element, .szFussballTickerTeasermodul, .teaser-media, .thema_clip_large [role="region"], .park-opener, .pdb-teaser, .pdb-teaser3-row-item, [role="listitem"]';
 
 const WORDS = ['Fußball', 'Bundesliga', 'Derby', 'Tabellenplatz', 'Geisterspiel', 'Spieltag', 'Schalke', 'BVB', 'FC Bayern', 'Wechsel-Poker', 'DFB', 'Hertha', 'FC '].map(w => w.toLowerCase());
 const STANDARD_CLASS = 'no-soccer-blocker-xyz';
@@ -10,10 +10,9 @@ let i = 0;
 export function hideContent(): Promise<number> {
   return new Promise<number>(resolve => {
     $(document).ready(() => {
-      setTimeout(() => {
+      if(!window.location.origin.includes('tagesschau')) {
         _hideContent();
-        resolve(i);
-      }, 400);
+      }
       setTimeout(() => {
         _hideContent();
       }, 500);
