@@ -1,8 +1,8 @@
 import * as $ from 'jquery';
 
-const SECTION_SELECTORS = '.section, section, article, .article, .id-Teaser-el, .teaser, figure, .hs-widget, .sz-teaserlist-element, .szFussballTickerTeasermodul, .teaser-media, .thema_clip_large [role="region"]';
+const SECTION_SELECTORS = '.section, section, article, .article, .id-Teaser-el, .teaser, figure, .hs-widget, .sz-teaserlist-element, .szFussballTickerTeasermodul, .teaser-media, .thema_clip_large [role="region"], .park-opener, .pdb-teaser, .pdb-teaser3-row-item';
 
-const WORDS = ['Fußball', 'Bundesliga', 'Derby', 'Tabellenplatz', 'Geisterspiel', 'Spieltag'];
+const WORDS = ['Fußball', 'Bundesliga', 'Derby', 'Tabellenplatz', 'Geisterspiel', 'Spieltag', 'Schalke', 'BVB', 'FC Bayern', 'Wechsel-Poker', 'DFB', 'Hertha', 'FC '].map(w => w.toLowerCase());
 const STANDARD_CLASS = 'no-soccer-blocker-xyz';
 
 let i = 0;
@@ -20,12 +20,9 @@ export function hideContent(): Promise<number> {
       setTimeout(() => {
         _hideContent();
       }, 750);
-      setTimeout(() => {
-        _hideContent();
-      }, 2500);
       setInterval(() => {
         _hideContent();
-      }, 5000);
+      }, 2500);
     });
   });
 }
@@ -34,9 +31,9 @@ export function hideContent(): Promise<number> {
 function _hideContent() {
   $(SECTION_SELECTORS).each((index, el) => {
     const $el = $(el);
-    const t = $el.text();
+    const t = $el.text().toLowerCase();
 
-    if(t && $el.is(':visible') && t.length < 1500) {
+    if(t && $el.is(':visible') && t.length < 2000) {
       WORDS.some((word) => {
         if(t.includes(word)) {
           // const childs = $el.find(SECTION_SELECTORS);
@@ -68,15 +65,18 @@ function _hideContent() {
   });
 }
 
+function createBtn(): JQuery<any> {
+  return $('<button style="display: block; text-align: center; border: 4px solid black; padding: 10px 20px; cursor: pointer; width: 100%; font-size: 14px;">Langweilig</button>');
+}
+
 function replaceSection($el: JQuery<any>): number {
-  const id = `${STANDARD_CLASS}-${i}`;
   const childId = `${STANDARD_CLASS}-inner-${i}`;
 
   if($el.hasClass(STANDARD_CLASS)) {
     return;
   }
 
-  const $btn = $('<button style="display: block; text-align: center; border: 4px solid black; padding: 10px 20px; cursor: pointer; width: 100%;">Show Hidden Content</button>');
+  const $btn = createBtn();
 
   $el
     .addClass(STANDARD_CLASS)
@@ -102,13 +102,11 @@ function replaceSection($el: JQuery<any>): number {
 
 
 function replaceImage($el: JQuery<any>): number {
-  const id = `${STANDARD_CLASS}-${i}`;
-
   if($el.hasClass(STANDARD_CLASS)) {
     return;
   }
 
-  const $btn = $('<button style="display: block; text-align: center; border: 4px solid black; padding: 10px 20px; cursor: pointer; width: 100%;">Show Hidden Content</button>');
+  const $btn = createBtn();
 
   $el
     .insertBefore($btn)
