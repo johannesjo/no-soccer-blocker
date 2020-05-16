@@ -2,6 +2,14 @@ import * as moment from 'moment';
 import * as $ from 'jquery';
 
 let count = 0;
+chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+  chrome.tabs.sendMessage(tabs[0].id, {
+      isToggle: true
+    },
+    function (msg) {
+      console.log("result message:", msg);
+    });
+});
 
 $(function () {
   const queryInfo = {
@@ -14,15 +22,10 @@ $(function () {
     $('#time').text(moment().format('YYYY-MM-DD HH:mm:ss'));
   });
 
-  chrome.browserAction.setBadgeText({text: count.toString()});
-  $('#countUp').click(() => {
-    chrome.browserAction.setBadgeText({text: (++count).toString()});
-  });
-
-  $('#changeBackground').click(() => {
+  $('#magic').click(() => {
     chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {
-          color: '#555555'
+          isToggle: true
         },
         function (msg) {
           console.log("result message:", msg);

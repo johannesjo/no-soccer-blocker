@@ -1,21 +1,21 @@
 {
   "manifest_version": 2,
-  "name": "Chrome Extension TypeScript Starter",
-  "description": "Chrome Extension, TypeScript, Visual Studio Code",
+  "name": "No Soccer Blocker",
+  "description": "Don't care about soccer (or anything else) and you wan't to remove it from your browsing experience? No problem!",
   "version": "1.0",
   "options_ui": {
     "page": "options.html",
     "chrome_style": true
   },
   "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_icon": "icon.png"
   },
   "content_scripts": [
     {
       "matches": [
         "<all_urls>"
       ],
+      "all_frames": true,
       "js": [
         "js/vendor.js",
         "js/content_script.js"
@@ -29,6 +29,7 @@
     ]
   },
   "permissions": [
+    "tabs",
     "storage",
     "<all_urls>"
   ]
