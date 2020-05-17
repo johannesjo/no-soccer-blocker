@@ -42,6 +42,13 @@ export function hideContent(): Promise<number> {
   });
 }
 
+$(window).focus(_updateCounter);
+
+function _updateCounter() {
+  if(!document.hidden) {
+    msgBackground($(`.${STANDARD_CLASS}`).length);
+  }
+}
 
 function _hideContent() {
   const isIframe = isInIframe();
@@ -55,7 +62,8 @@ function _hideContent() {
     $('img').each((i, el: HTMLImageElement) => {
       _checkImage(el);
     });
-    msgBackground($(`.${STANDARD_CLASS}`).length);
+
+    _updateCounter();
   }
 }
 
