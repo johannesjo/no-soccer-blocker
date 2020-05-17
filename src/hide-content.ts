@@ -5,7 +5,9 @@ import {DEFAULT_OPTS, OptionsModel} from './options.model';
 
 const IS_DEV = false;
 
-const SECTION_SELECTORS = '.section, section, article, .article, .id-Teaser-el, .teaser, figure, .hs-widget, .sz-teaserlist-element, .szFussballTickerTeasermodul, .teaser-media, .thema_clip_large [role="region"], .park-opener, .pdb-teaser, .pdb-teaser3-row-item, [role="listitem"]';
+const SECTION_SELECTORS = '.section, section, article, .article, .id-Teaser-el, .teaser, figure, .hs-widget, .sz-teaserlist-element, .szFussballTickerTeasermodul, .teaser-media, .thema_clip_large [role="region"], .park-opener, .pdb-teaser, .pdb-teaser3-row-item, [role="listitem"], .hcf-ressort';
+
+const DEFAULT_MAX_SECTION_LENGTH = 4000;
 
 let WORDS;
 let BTN_TXT;
@@ -57,11 +59,15 @@ function _hideContent() {
   }
 }
 
-function _checkSectionEl(el: HTMLElement | JQuery<any>, maxSectionLength = 8000) {
+function _checkSectionEl(el: HTMLElement | JQuery<any>, maxSectionLength = DEFAULT_MAX_SECTION_LENGTH) {
   const $el = $(el);
-  const t = $el.text().toLowerCase();
+  const t = $el.text().toLowerCase().replace(/  +/g, ' ');
 
-  if(t && $el.is(':visible') && t.length < maxSectionLength) {
+  // if(maxSectionLength === DEFAULT_MAX_SECTION_LENGTH) {
+  //   console.log(t.length, $el, t);
+  // }
+
+  if(t && t.length < maxSectionLength) {
     WORDS.some((word) => {
       if(t.includes(word)) {
         // const childs = $el.find(SECTION_SELECTORS);
@@ -99,7 +105,7 @@ function _createBtn(word: string): JQuery<any> {
       ? BTN_TXT
       : word;
 
-  return $(`<button style="display: block; text-align: center; border: 4px solid black; padding: 10px 20px; cursor: pointer; width: 100%; font-size: 14px;">${btnTxt}</button>`);
+  return $(`<button style="display: block; text-align: center; border: 4px solid black; padding: 10px 20px; cursor: pointer; width: 100%; font-size: 14px;" data-word="${word}">${btnTxt}</button>`);
 }
 
 function _replaceSection($el: JQuery<any>, word: string): number {
