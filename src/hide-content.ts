@@ -5,9 +5,9 @@ import {DEFAULT_OPTS, OptionsModel} from './options.model';
 
 const IS_DEV = false;
 
-const SECTION_SELECTORS = '.section, section, article, .article, .id-Teaser-el, .teaser, figure, .hs-widget, .sz-teaserlist-element, .szFussballTickerTeasermodul, .teaser-media, .thema_clip_large [role="region"], .park-opener, .pdb-teaser, .pdb-teaser3-row-item, [role="listitem"], .hcf-ressort';
+const SECTION_SELECTORS = '.section, section, article, .article, .id-Teaser-el, .teaser, figure, .hs-widget, .sz-teaserlist-element, .szFussballTickerTeasermodul, .teaser-media, .thema_clip_large [role="region"], .park-opener, .pdb-teaser, .pdb-teaser3-row-item, [role="listitem"], .hcf-ressort, .promo, .clearfix, .info, .o-teaser, .vhb-teaser';
 
-const DEFAULT_MAX_SECTION_LENGTH = 4000;
+const DEFAULT_MAX_SECTION_LENGTH = 3000;
 
 let WORDS = [];
 let BTN_TXT;

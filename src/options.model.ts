@@ -4,6 +4,6 @@ export interface OptionsModel {
 }
 
 export const DEFAULT_OPTS: OptionsModel = {
-  words: ['Fußball', 'Bundesliga', 'Derby', 'Tabellenplatz', 'Geisterspiel', 'Spieltag', 'Schalke', 'FC Bayern', 'Wechsel-Poker', 'DFB', 'Hertha', 'FC ', 'Strafraum', 'Eintracht Frankfurt', 'Einzelkritik', 'Torjubel', 'DFL'].join(','),
+  words: ['Fußball', 'Bundesliga', 'Derby', 'Tabellenplatz', 'Geisterspiel', 'Spieltag', 'Schalke', 'FC Bayern', 'Wechsel-Poker', 'DFB', 'Hertha', 'FC ', 'Strafraum', 'Eintracht Frankfurt', 'Einzelkritik', 'Torjubel', 'Top-Spiel', 'ohne Fans'].join(','),
   btnTxt: 'Langweilig'
 };
