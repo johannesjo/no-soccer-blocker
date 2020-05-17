@@ -2,10 +2,9 @@ import * as $ from 'jquery';
 import {isInIframe} from './is-in-iframe';
 import {msgBackground} from './msg-background';
 import {DEFAULT_OPTS, OptionsModel} from './options.model';
+import {SECTION_SELECTORS} from './cfg';
 
 const IS_DEV = false;
-
-const SECTION_SELECTORS = '.section, section, article, .article, .id-Teaser-el, .teaser, figure, .hs-widget, .sz-teaserlist-element, .szFussballTickerTeasermodul, .teaser-media, .thema_clip_large [role="region"], .park-opener, .pdb-teaser, .pdb-teaser3-row-item, [role="listitem"], .hcf-ressort, .promo, .clearfix, .info, .o-teaser, .vhb-teaser';
 
 const DEFAULT_MAX_SECTION_LENGTH = 3000;
 
