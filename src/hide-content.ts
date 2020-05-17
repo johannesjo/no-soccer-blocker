@@ -114,7 +114,7 @@ function _createBtn(word: string): JQuery<any> {
       ? BTN_TXT
       : word;
 
-  return $(`<button style="display: block; text-align: center; border: 4px solid black; padding: 10px 20px; cursor: pointer; width: 100%; font-size: 14px;" data-word="${word}">${btnTxt}</button>`);
+  return $(`<button style="display: block; text-align: center; border: 1px solid black; padding: 10px 20px; cursor: pointer; width: 100%; font-size: 12px;" data-word="${word}">${btnTxt}</button>`);
 }
 
 function _replaceSection($el: JQuery<any>, word: string): number {
