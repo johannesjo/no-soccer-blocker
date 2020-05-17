@@ -1,8 +1,9 @@
 {
   "manifest_version": 2,
   "name": "No Soccer Blocker",
-  "description": "Don't care about soccer (or anything else) and you wan't to remove it from your browsing experience? No problem!",
+  "description": "__MSG_appDesc__",
   "version": "1.0",
+  "default_locale": "de",
   "options_ui": {
     "page": "options.html",
     "chrome_style": true
