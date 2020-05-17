@@ -3,29 +3,46 @@
 <head>
   <title>No Soccer Blocker Options</title>
   <script src="js/vendor.js"></script>
+  <style>
+    .row {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 
 <body>
 
-<label for="words">
-  Words to search (comma separated)
-</label>
+<div class="row">
+  <label for="words">
+    Words to search (comma separated)
+  </label>
 
-<input id="words"
-       style="display: block; width: 100%;"
-       type="text">
+  <input id="words"
+         style="display: block; width: 100%;"
+         type="text">
+</div>
 
-<label for="btnTxt">
-  Replace Button Text
-</label>
+<div class="row">
+  <label for="btnTxt">
+    Replace Button Text
+  </label>
 
-<input id="btnTxt"
-       style="display: block; width: 100%;"
-       type="text">
+  <input id="btnTxt"
+         style="display: block; width: 100%;"
+         type="text">
+</div>
 
+<div class="row">
+  <label for="isJustRemove">
+    <input id="isJustRemove"
+           type="checkbox">
+    Remove instead of replacing it with a button
+  </label>
+</div>
 
-<div id="status"></div>
-<button id="restore-defaults">Restore Defaults</button>
+<div id="status"
+     style="min-height: 30px;"></div>
+<button id="restoreDefaults">Restore Defaults</button>
 <button id="save">Save</button>
 
 <script src="js/options.js"></script>

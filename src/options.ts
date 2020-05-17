@@ -17,13 +17,13 @@ function saveOptions(opts: OptionsModel) {
 // stored in chrome.storage.
 function loadOptions() {
   chrome.storage.sync.get({
-    words: DEFAULT_OPTS.words,
-    btnTxt: DEFAULT_OPTS.btnTxt,
-  }, ({words, btnTxt}: OptionsModel) => {
+    ...DEFAULT_OPTS
+  }, ({words, btnTxt, isJustRemove}: OptionsModel) => {
     console.log('Fußball');
     console.log(words);
     $('#words').val(words);
     $('#btnTxt').val(btnTxt);
+    $('#isJustRemove').prop('checked', isJustRemove);
   });
 }
 
@@ -34,9 +34,10 @@ function restoreDefaults() {
 
 $('#save').click(() => {
   const words = $('#words').val().toString();
-  const buttonText = $('#btnTxt').val().toString();
-  saveOptions({words, btnTxt: buttonText});
+  const btnTxt = $('#btnTxt').val().toString();
+  const isJustRemove = $('#isJustRemove').is(':checked');
+  saveOptions({words, btnTxt, isJustRemove});
 });
-$('#restore-defaults').click(restoreDefaults);
+$('#restoreDefaults').click(restoreDefaults);
 $(loadOptions); // document.addEventListener('DOMContentLoaded', restore_options);
 

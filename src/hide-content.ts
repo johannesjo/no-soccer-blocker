@@ -10,13 +10,14 @@ const DEFAULT_MAX_SECTION_LENGTH = 3000;
 
 let WORDS = [];
 let BTN_TXT;
+let IS_JUST_REMOVE;
 
 chrome.storage.sync.get({
-  words: DEFAULT_OPTS.words,
-  btnTxt: DEFAULT_OPTS.btnTxt,
-}, ({words, btnTxt}: OptionsModel) => {
+  ...DEFAULT_OPTS,
+}, ({words, btnTxt, isJustRemove}: OptionsModel) => {
   WORDS = words.toLowerCase().split(',');
   BTN_TXT = btnTxt;
+  IS_JUST_REMOVE = isJustRemove;
 });
 const STANDARD_CLASS = 'no-soccer-blocker-xyz';
 
@@ -123,25 +124,30 @@ function _replaceSection($el: JQuery<any>, word: string): number {
     return;
   }
 
-  const $btn = _createBtn(word);
+  if(IS_JUST_REMOVE) {
+    $el
+      .addClass(STANDARD_CLASS)
+      .hide();
+  } else {
+    const $btn = _createBtn(word);
+    $el
+      .addClass(STANDARD_CLASS)
+      .children()
+      .addClass(childId)
+      .hide();
 
-  $el
-    .addClass(STANDARD_CLASS)
-    .children()
-    .addClass(childId)
-    .hide();
+    $el
+      .append($btn);
 
-  $el
-    .append($btn);
+    $btn.click((ev) => {
+      // don't bubble
+      ev.preventDefault();
+      ev.stopPropagation();
 
-  $btn.click((ev) => {
-    // don't bubble
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    $el.children().show();
-    $btn.remove();
-  });
+      $el.children().show();
+      $btn.remove();
+    });
+  }
 
   count++;
   return count;
@@ -153,16 +159,20 @@ function _replaceImage($img: JQuery<any>, word: string): number {
     return;
   }
 
-  const $btn = _createBtn(word);
   const $par = $img.closest(SECTION_SELECTORS);
 
   if($par) {
     _replaceSection($par, word);
+  } else if(IS_JUST_REMOVE) {
+    $img
+      .addClass(STANDARD_CLASS)
+      .hide();
   } else {
+    const $btn = _createBtn(word);
     $img
       .insertBefore($btn)
       .addClass(STANDARD_CLASS)
-      .css({opacity: 0});
+      .hide();
 
     $btn.click((ev) => {
       // don't bubble
