@@ -1,8 +1,11 @@
 import * as $ from 'jquery';
+import {isInIframe} from './is-in-iframe';
+
+const IS_DEV = true;
 
 const SECTION_SELECTORS = '.section, section, article, .article, .id-Teaser-el, .teaser, figure, .hs-widget, .sz-teaserlist-element, .szFussballTickerTeasermodul, .teaser-media, .thema_clip_large [role="region"], .park-opener, .pdb-teaser, .pdb-teaser3-row-item, [role="listitem"]';
 
-const WORDS = ['Fußball', 'Bundesliga', 'Derby', 'Tabellenplatz', 'Geisterspiel', 'Spieltag', 'Schalke', 'BVB', 'FC Bayern', 'Wechsel-Poker', 'DFB', 'Hertha', 'FC '].map(w => w.toLowerCase());
+const WORDS = ['Fußball', 'Bundesliga', 'Derby', 'Tabellenplatz', 'Geisterspiel', 'Spieltag', 'Schalke', 'BVB', 'FC Bayern', 'Wechsel-Poker', 'DFB', 'Hertha', 'FC ', 'Strafraum', 'Eintracht Frankfurt', 'Einzelkritik'].map(w => w.toLowerCase());
 const STANDARD_CLASS = 'no-soccer-blocker-xyz';
 
 let i = 0;
@@ -28,54 +31,68 @@ export function hideContent(): Promise<number> {
 
 
 function _hideContent() {
-  $(SECTION_SELECTORS).each((index, el) => {
-    const $el = $(el);
-    const t = $el.text().toLowerCase();
+  const isIframe = isInIframe();
 
-    if(t && $el.is(':visible') && t.length < 2000) {
-      WORDS.some((word) => {
-        if(t.includes(word)) {
-          // const childs = $el.find(SECTION_SELECTORS);
-          // if(childs) {
-          //   replaceSection(childs);
-          // } else {
-          replaceSection($el);
-          // }
-          console.log('No Soccer Blocker Replace:', word, $el, t);
-          return true;
-        }
-      });
-    }
-  });
-
-  $('img').each((i, el) => {
-    const $img = $(el);
-    const t = $img.attr('alt');
-
-    if(t && $img.is(':visible')) {
-      WORDS.some((word) => {
-        if(t.includes(word)) {
-          replaceImage($img);
-          console.log('No Soccer Blocker Replace IMG:', word, $img, t);
-          return true;
-        }
-      });
-    }
-  });
+  if(isIframe) {
+    _checkSectionEl($('body'), 99999999);
+  } else {
+    $(SECTION_SELECTORS).each((index, el) => {
+      _checkSectionEl(el);
+    });
+    $('img').each((i, el: HTMLImageElement) => {
+      _checkImage(el);
+    });
+  }
 }
 
-function createBtn(): JQuery<any> {
+function _checkSectionEl(el: HTMLElement | JQuery<any>, maxSectionLength = 8000) {
+  const $el = $(el);
+  const t = $el.text().toLowerCase();
+  IS_DEV && console.log(t.length);
+
+  if(t && $el.is(':visible') && t.length < maxSectionLength) {
+    WORDS.some((word) => {
+      if(t.includes(word)) {
+        // const childs = $el.find(SECTION_SELECTORS);
+        // if(childs) {
+        //   replaceSection(childs);
+        // } else {
+        _replaceSection($el);
+        // }
+        IS_DEV && console.log('No Soccer Blocker Replace:', word, $el, t);
+        return true;
+      }
+    });
+  }
+}
+
+function _checkImage(img: HTMLImageElement) {
+  const $img = $(img);
+  const t = $img.attr('alt');
+
+  if(t && $img.is(':visible')) {
+    WORDS.some((word) => {
+      if(t.includes(word)) {
+        _replaceImage($img);
+        IS_DEV && console.log('No Soccer Blocker Replace IMG:', word, $img, t);
+        return true;
+      }
+    });
+  }
+}
+
+function _createBtn(): JQuery<any> {
   return $('<button style="display: block; text-align: center; border: 4px solid black; padding: 10px 20px; cursor: pointer; width: 100%; font-size: 14px;">Langweilig</button>');
 }
 
-function replaceSection($el: JQuery<any>): number {
+function _replaceSection($el: JQuery<any>): number {
   const childId = `${STANDARD_CLASS}-inner-${i}`;
 
   if($el.hasClass(STANDARD_CLASS)) {
     return;
   }
 
-  const $btn = createBtn();
+  const $btn = _createBtn();
 
   $el
     .addClass(STANDARD_CLASS)
@@ -100,12 +117,12 @@ function replaceSection($el: JQuery<any>): number {
 }
 
 
-function replaceImage($el: JQuery<any>): number {
+function _replaceImage($el: JQuery<any>): number {
   if($el.hasClass(STANDARD_CLASS)) {
     return;
   }
 
-  const $btn = createBtn();
+  const $btn = _createBtn();
 
   $el
     .insertBefore($btn)
