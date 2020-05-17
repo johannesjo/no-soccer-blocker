@@ -9,7 +9,7 @@ const SECTION_SELECTORS = '.section, section, article, .article, .id-Teaser-el, 
 
 const DEFAULT_MAX_SECTION_LENGTH = 4000;
 
-let WORDS;
+let WORDS = [];
 let BTN_TXT;
 
 chrome.storage.sync.get({
@@ -85,7 +85,8 @@ function _checkSectionEl(el: HTMLElement | JQuery<any>, maxSectionLength = DEFAU
 
 function _checkImage(img: HTMLImageElement) {
   const $img = $(img);
-  const t = $img.attr('alt');
+  const alt = $img.attr('alt');
+  const t = alt && alt.toLowerCase();
 
   if(t && $img.is(':visible')) {
     WORDS.some((word) => {
@@ -140,27 +141,32 @@ function _replaceSection($el: JQuery<any>, word: string): number {
 }
 
 
-function _replaceImage($el: JQuery<any>, word: string): number {
-  if($el.hasClass(STANDARD_CLASS)) {
+function _replaceImage($img: JQuery<any>, word: string): number {
+  if($img.hasClass(STANDARD_CLASS)) {
     return;
   }
 
   const $btn = _createBtn(word);
+  const $par = $img.closest(SECTION_SELECTORS);
 
-  $el
-    .insertBefore($btn)
-    .addClass(STANDARD_CLASS)
-    .hide();
+  if($par) {
+    _replaceSection($par, word);
+  } else {
+    $img
+      .insertBefore($btn)
+      .addClass(STANDARD_CLASS)
+      .css({opacity: 0});
 
-  $btn.click((ev) => {
-    // don't bubble
-    ev.preventDefault();
-    ev.stopPropagation();
+    $btn.click((ev) => {
+      // don't bubble
+      ev.preventDefault();
+      ev.stopPropagation();
 
-    $el
-      .show();
-    $btn.remove();
-  });
+      $img
+        .show();
+      $btn.remove();
+    });
+  }
 
   count++;
   return count;
