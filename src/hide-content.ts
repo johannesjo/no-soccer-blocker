@@ -1,14 +1,15 @@
 import * as $ from 'jquery';
 import {isInIframe} from './is-in-iframe';
+import {msgBackground} from './msg-background';
 
-const IS_DEV = true;
+const IS_DEV = false;
 
 const SECTION_SELECTORS = '.section, section, article, .article, .id-Teaser-el, .teaser, figure, .hs-widget, .sz-teaserlist-element, .szFussballTickerTeasermodul, .teaser-media, .thema_clip_large [role="region"], .park-opener, .pdb-teaser, .pdb-teaser3-row-item, [role="listitem"]';
 
-const WORDS = ['Fußball', 'Bundesliga', 'Derby', 'Tabellenplatz', 'Geisterspiel', 'Spieltag', 'Schalke', 'BVB', 'FC Bayern', 'Wechsel-Poker', 'DFB', 'Hertha', 'FC ', 'Strafraum', 'Eintracht Frankfurt', 'Einzelkritik'].map(w => w.toLowerCase());
+const WORDS = ['Fußball', 'Bundesliga', 'Derby', 'Tabellenplatz', 'Geisterspiel', 'Spieltag', 'Schalke', 'BVB', 'FC Bayern', 'Wechsel-Poker', 'DFB', 'Hertha', 'FC ', 'Strafraum', 'Eintracht Frankfurt', 'Einzelkritik', 'Torjubel', 'DFL'].map(w => w.toLowerCase());
 const STANDARD_CLASS = 'no-soccer-blocker-xyz';
 
-let i = 0;
+let count = 0;
 
 export function hideContent(): Promise<number> {
   return new Promise<number>(resolve => {
@@ -42,13 +43,13 @@ function _hideContent() {
     $('img').each((i, el: HTMLImageElement) => {
       _checkImage(el);
     });
+    msgBackground($(`.${STANDARD_CLASS}`).length);
   }
 }
 
 function _checkSectionEl(el: HTMLElement | JQuery<any>, maxSectionLength = 8000) {
   const $el = $(el);
   const t = $el.text().toLowerCase();
-  IS_DEV && console.log(t.length);
 
   if(t && $el.is(':visible') && t.length < maxSectionLength) {
     WORDS.some((word) => {
@@ -86,7 +87,7 @@ function _createBtn(): JQuery<any> {
 }
 
 function _replaceSection($el: JQuery<any>): number {
-  const childId = `${STANDARD_CLASS}-inner-${i}`;
+  const childId = `${STANDARD_CLASS} - inner -${count}`;
 
   if($el.hasClass(STANDARD_CLASS)) {
     return;
@@ -112,8 +113,8 @@ function _replaceSection($el: JQuery<any>): number {
     $btn.remove();
   });
 
-  i++;
-  return i;
+  count++;
+  return count;
 }
 
 
@@ -139,6 +140,6 @@ function _replaceImage($el: JQuery<any>): number {
     $btn.remove();
   });
 
-  i++;
-  return i;
+  count++;
+  return count;
 }
