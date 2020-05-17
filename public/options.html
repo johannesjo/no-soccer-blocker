@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Test Extension Options</title>
+  <title>No Soccer Blocker Options</title>
   <script src="js/vendor.js"></script>
 </head>
 
 <body>
-Favorite color:
-<select id="color">
-  <option value="red">red</option>
-  <option value="green">green</option>
-  <option value="blue">blue</option>
-  <option value="yellow">yellow</option>
-</select>
 
-<label>
-  <input id="like"
-         type="checkbox">
-  I like colors.
+<label for="words">
+  Words to search (comma separated)
 </label>
 
+<input id="words"
+       style="display: block; width: 100%;"
+       type="text">
+
+<label for="btnTxt">
+  Replace Button Text
+</label>
+
+<input id="btnTxt"
+       style="display: block; width: 100%;"
+       type="text">
+
+
 <div id="status"></div>
+<button id="restore-defaults">Restore Defaults</button>
 <button id="save">Save</button>
 
 <script src="js/options.js"></script>
