@@ -1,6 +1,7 @@
 export const SECTION_SELECTORS = `.section,
 section,
 article,
+aside,
 .article,
 .id-Teaser-el,
 .teaser,
