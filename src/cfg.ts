@@ -21,5 +21,7 @@ figure,
 .info,
 .o-teaser,
 .vhb-teaser,
-.zg-kickerticker
+.zg-kickerticker,
+ytd-rich-item-renderer,
+ytd-compact-video-renderer
 `;
