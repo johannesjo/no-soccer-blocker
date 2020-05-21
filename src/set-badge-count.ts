@@ -1,8 +1,8 @@
 import {EV} from './ev';
 
-export function msgBackground(data: any) {
+export function setBadgeCount(nr: number) {
   chrome.runtime.sendMessage({
     action: EV.UPDATE_BADGE,
-    source: data
+    source: nr
   });
 }

@@ -1,6 +1,6 @@
 import * as $ from 'jquery';
 import {isInIframe} from './is-in-iframe';
-import {msgBackground} from './msg-background';
+import {setBadgeCount} from './set-badge-count';
 import {DEFAULT_OPTS, OptionsModel} from './options.model';
 import {SECTION_SELECTORS} from './cfg';
 
@@ -46,7 +46,7 @@ $(window).focus(_updateCounter);
 
 function _updateCounter() {
   if(!document.hidden) {
-    msgBackground($(`.${STANDARD_CLASS}`).length);
+    setBadgeCount($(`.${STANDARD_CLASS}`).length);
   }
 }
 
