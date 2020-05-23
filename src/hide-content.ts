@@ -43,7 +43,7 @@ export function hideContent(): Promise<number> {
 $(window).focus(_updateCounter);
 
 function _updateCounter() {
-  if(!document.hidden) {
+  if(!document.hidden && !isInIframe()) {
     setBadgeCount($(`.${STANDARD_CLASS}`).length);
   }
 }
