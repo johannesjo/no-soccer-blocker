@@ -2,9 +2,7 @@ import * as $ from 'jquery';
 import {isInIframe} from './is-in-iframe';
 import {setBadgeCount} from './set-badge-count';
 import {DEFAULT_OPTS, OptionsModel} from './options.model';
-import {SECTION_SELECTORS} from './cfg';
-
-const IS_DEV = false;
+import {IS_DEV, SECTION_SELECTORS} from './cfg';
 
 const DEFAULT_MAX_SECTION_LENGTH = 3000;
 

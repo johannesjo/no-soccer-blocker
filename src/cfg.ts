@@ -25,3 +25,5 @@ figure,
 ytd-rich-item-renderer,
 ytd-compact-video-renderer
 `;
+
+export const IS_DEV = false;
